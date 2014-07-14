@@ -32,8 +32,13 @@ f = open('emails.txt', 'a')
 
 for url in g.get_urls():
     print "Looking for e-mail addresses into %s..." % url
-    response = urllib2.urlopen(url)
+    #response = urllib2.urlopen(url)
+    opener = urllib2.build_opener()
+    response = urllib2.Request(url)
+    response.add_header('Accept-Language', 'en')
+    response = opener.open(response)
     reading = response.read()
+
     # Filtering
     emails = re.findall(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}',
                         reading)
