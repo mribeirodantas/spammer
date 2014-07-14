@@ -25,10 +25,11 @@ import re
 
 search_string = raw_input("Key word: ")
 g = pygoogle(search_string)
+g.pages = 1
 print '%s results were found.' % (g.get_result_count())
 
 # Opening file to save encountered e-mails.
-f = open('emails.txt', 'a')
+f = open('emails.txt', 'a+')
 
 for url in g.get_urls():
     print "Looking for e-mail addresses into %s..." % url
@@ -42,7 +43,7 @@ for url in g.get_urls():
     # Filtering
     emails = re.findall(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}',
                         reading)
-    print "Results:\n"
+    print "Results:"
     for email in emails:
         print email
         f.write(email)
